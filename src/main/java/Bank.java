@@ -26,9 +26,12 @@ public class Bank {
      * @return boolean
      */
     public boolean withdrawMoney(final BankAccount bankAccount, final double amount) {
-        /*
-         * Implement this function
-         */
+        if(bankAccount.getAccountBalance() > amount) {
+            bankAccount.setAccountBalance(bankAccount.getAccountBalance()-amount);
+            return true;
+        }
+        else
+            return false;
     }
 
     /**
@@ -42,9 +45,8 @@ public class Bank {
      * @return boolean
      */
     public boolean depositMoney(final BankAccount bankAccount, final double amount) {
-        /*
-         * Implement this function
-         */
+        bankAccount.setAccountBalance(bankAccount.getAccountBalance()+amount);
+        return true;
     }
 
     /**
@@ -61,9 +63,16 @@ public class Bank {
 
     public boolean transferMoney(final BankAccount source, final BankAccount destination,
             final double amount) {
-        /*
-         * Implement this function
-         */
+        boolean continue1= false;
+        if(withdrawMoney(source, amount)){
+             continue1=true;
+        }
+        if(continue1) {
+            depositMoney(destination, amount);
+            return true;
+        }
+        else
+            return false;
     }
 
     /**
@@ -74,21 +83,17 @@ public class Bank {
      */
 
     public void changeOwnerName(final BankAccount bankAccount, final String name) {
-        /*
-         * Implement this function
-         */
+        bankAccount.setOwnerName(name);
     }
 
-    public static int totalAccounts = 0;
+    public static int totalAccounts = BankAccount.accountsMade;
     /**
      * Uses static variable to get number of bank accounts opened.
      *
      * @return the total number of accounts
      */
     public static int getNumberOfAccount() {
-        /*
-         * Implement this function
-         */
+        return BankAccount.accountsMade;
     }
 
     /**
@@ -121,6 +126,6 @@ public class Bank {
 
         // Print number of accounts
         System.out.print("Number of active accounts at " + bank.bankName + " are ");
-        System.out.println(Bank.totalAccounts);
+        System.out.println(BankAccount.accountsMade);
     }
 }
